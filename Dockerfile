@@ -1,3 +1,6 @@
+# renovate: datasource=gitlab-releases depName=gitlab-org/gitlab-runner extractVersion=^v(?<version>\d+\.\d+.\d+)
+ARG VERSION=15.11.0
+
 # syntax=docker/dockerfile:1.4
 FROM golang:1.20-bullseye AS golang-builder
 
@@ -6,8 +9,7 @@ COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.15-bullseye-r3 /opt/bitnami
 
 ARG PACKAGE=gitlab-runner-helper
 ARG TARGET_DIR=gitlab-runner-helper
-# renovate: datasource=gitlab-releases depName=gitlab-org/gitlab-runner extractVersion=^v(?<version>\d+\.\d+.\d+)
-ARG VERSION=15.11.0
+ARG VERSION
 ARG REF=v${VERSION}
 ARG CGO_ENABLED=0
 
@@ -57,7 +59,8 @@ RUN install_packages ca-certificates git git-lfs openssh-client procps \
     && ln -s /opt/bitnami/gitlab-runner-helper/bin/gitlab-runner-helper /usr/bin/gitlab-runner-helper \
     && ln -s /opt/bitnami/scripts/gitlab-runner-helper/entrypoint.sh /entrypoint
 
-ENV APP_VERSION="15.11.0" \
+ARG VERSION
+ENV APP_VERSION=$VERSION \
     BITNAMI_APP_NAME="gitlab-runner-helper" \
     PATH="/opt/bitnami/common/bin:/opt/bitnami/gitlab-runner-helper/bin:$PATH" \
     HOME="/" \

@@ -19,7 +19,7 @@
         "^\\.github/workflows/.+\\.ya?ml$"
       ],
       "matchStrings": [
-        "\\s+['\"]?(?<currentValue>.+?)['\"]?\\s*# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>.+?)(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\n"
+        ".+:\\s+['\"]?(?<currentValue>.+?)['\"]?\\s*# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>.+?)(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\n"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
       "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{/if}}"

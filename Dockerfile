@@ -50,11 +50,11 @@ FROM bitnami/minideb:bullseye as stage-0
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY --link --from=golang-builder /opt/bitnami /opt/bitnami
 
-
 RUN install_packages ca-certificates git git-lfs openssh-client procps \
     && mkdir /home/gitlab-runner \
     && chmod -R g+rwX /home/gitlab-runner \
     && ln -s /opt/bitnami/common/bin/dumb-init /usr/bin/dumb-init \
+    && ln -s /opt/bitnami/gitlab-runner-helper/bin/gitlab-runner-helper /usr/bin/gitlab-runner-helper \
     && ln -s /opt/bitnami/scripts/gitlab-runner-helper/entrypoint.sh /entrypoint
 
 ENV APP_VERSION="15.11.0" \

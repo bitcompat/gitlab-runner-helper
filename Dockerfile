@@ -2,7 +2,7 @@
 ARG VERSION=16.2.0
 
 # syntax=docker/dockerfile:1.4
-FROM golang:1.20-bullseye AS golang-builder
+FROM golang:1.21-bullseye AS golang-builder
 
 COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-bullseye-r2 /opt/bitnami/ /opt/bitnami/
 COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.15-bullseye-r3 /opt/bitnami/ /opt/bitnami/

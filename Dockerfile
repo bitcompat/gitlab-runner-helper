@@ -2,7 +2,7 @@
 ARG VERSION=16.6.1
 
 # syntax=docker/dockerfile:1.4
-FROM golang:1.21-bullseye AS golang-builder
+FROM golang:1.21-bookworm AS golang-builder
 
 COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-bullseye-r2 /opt/bitnami/ /opt/bitnami/
 COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.15-bullseye-r3 /opt/bitnami/ /opt/bitnami/
@@ -47,7 +47,7 @@ EOT
 
 COPY rootfs /
 
-FROM bitnami/minideb:bullseye as stage-0
+FROM bitnami/minideb:bookworm as stage-0
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY --link --from=golang-builder /opt/bitnami /opt/bitnami
@@ -65,14 +65,14 @@ ENV APP_VERSION=$VERSION \
     PATH="/opt/bitnami/common/bin:/opt/bitnami/gitlab-runner-helper/bin:$PATH" \
     HOME="/" \
     OS_ARCH="${TARGETARCH:-amd64}" \
-    OS_FLAVOUR="debian-11" \
+    OS_FLAVOUR="debian-12" \
     OS_NAME="linux"
 
 LABEL org.opencontainers.image.licenses="Apache-2.0" \
-      org.opencontainers.image.ref.name="15.11.0-debian-11-r0" \
+      org.opencontainers.image.ref.name="$VERSION-debian-12-r0" \
       org.opencontainers.image.source="https://github.com/bitcompat/gitlab-runner-helper" \
       org.opencontainers.image.title="gitlab-runner-helper" \
-      org.opencontainers.image.version="15.11.0"
+      org.opencontainers.image.version="$VERSION"
 
 USER 1001
 ENTRYPOINT [ "/usr/bin/dumb-init", "/opt/bitnami/scripts/gitlab-runner-helper/entrypoint.sh" ]

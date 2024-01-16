@@ -63,7 +63,7 @@ ARG VERSION
 ENV APP_VERSION=$VERSION \
     BITNAMI_APP_NAME="gitlab-runner-helper" \
     PATH="/opt/bitnami/common/bin:/opt/bitnami/gitlab-runner-helper/bin:$PATH" \
-    HOME="/" \
+    HOME="/home/gitlab-runner" \
     OS_ARCH="${TARGETARCH:-amd64}" \
     OS_FLAVOUR="debian-12" \
     OS_NAME="linux"

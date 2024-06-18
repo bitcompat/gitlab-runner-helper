@@ -1,11 +1,11 @@
 # renovate: datasource=gitlab-releases depName=gitlab-org/gitlab-runner extractVersion=^v(?<version>\d+\.\d+.\d+)
-ARG VERSION=16.7.0
+ARG VERSION=17.0.0
 
 # syntax=docker/dockerfile:1.4
-FROM golang:1.21-bookworm AS golang-builder
+FROM golang:1.22-bookworm AS golang-builder
 
-COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-bullseye-r2 /opt/bitnami/ /opt/bitnami/
-COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.15-bullseye-r3 /opt/bitnami/ /opt/bitnami/
+COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-bookworm-r1 /opt/bitnami/ /opt/bitnami/
+COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.15-bookworm-r2 /opt/bitnami/ /opt/bitnami/
 
 ARG PACKAGE=gitlab-runner-helper
 ARG TARGET_DIR=gitlab-runner-helper

@@ -35,6 +35,14 @@
       "matchDatasources": ["docker"],
       "rangeStrategy": "replace",
       "stabilityDays": 1
+    },
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
     }
   ]
 }

@@ -2,7 +2,7 @@
 ARG VERSION=17.0.0
 
 # syntax=docker/dockerfile:1.4
-FROM golang:1.22-bookworm AS golang-builder
+FROM golang:1.25-bookworm AS golang-builder
 
 COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-bookworm-r1 /opt/bitnami/ /opt/bitnami/
 COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.15-bookworm-r2 /opt/bitnami/ /opt/bitnami/

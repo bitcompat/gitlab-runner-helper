@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.18
 # renovate: datasource=gitlab-releases depName=gitlab-org/gitlab-runner extractVersion=^v(?<version>\d+\.\d+.\d+)
-ARG BUILD_VERSION=17.11.4
+ARG BUILD_VERSION=18.3.1
 
 FROM golang:1.25-bookworm AS golang-builder
 

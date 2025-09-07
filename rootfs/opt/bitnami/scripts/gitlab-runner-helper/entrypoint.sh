@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright Broadcom, Inc. All Rights Reserved.
+# SPDX-License-Identifier: APACHE-2.0
 
 # shellcheck disable=SC1091
 
@@ -25,7 +27,10 @@ if ! am_i_root; then
         export NSS_WRAPPER_PASSWD
         NSS_WRAPPER_GROUP="$(mktemp)"
         export NSS_WRAPPER_GROUP
-        echo "gitlab-runner:x:$(id -u):$(id -g):GitlabRunner:/home/gitlab-runner:/bin/false" >"$NSS_WRAPPER_PASSWD"
+        if [[ "$HOME" == "/" ]]; then
+            export HOME=/home/gitlab-runner
+        fi
+        echo "gitlab-runner:x:$(id -u):$(id -g):GitlabRunner:${HOME}:/bin/false" >"$NSS_WRAPPER_PASSWD"
         echo "gitlab-runner:x:$(id -g):" >"$NSS_WRAPPER_GROUP"
         chmod 400 "$NSS_WRAPPER_PASSWD" "$NSS_WRAPPER_GROUP"
     fi

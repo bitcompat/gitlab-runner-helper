@@ -45,14 +45,13 @@ exec /bin/bash
     strip --strip-all /opt/bitnami/common/bin/* || true
 EOT
 
-COPY rootfs /
-
 FROM bitnami/minideb:bookworm as stage-0
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY --link --from=golang-builder /opt/bitnami /opt/bitnami
+COPY rootfs /
 
-RUN <<EOT /bin/bash
+RUN <<EOT
   install_packages ca-certificates git git-lfs openssh-client procps curl
   mkdir /home/gitlab-runner
   chmod -R g+rwX /home/gitlab-runner

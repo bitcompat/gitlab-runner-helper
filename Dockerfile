@@ -2,7 +2,7 @@
 # renovate: datasource=gitlab-releases depName=gitlab-org/gitlab-runner extractVersion=^v(?<version>\d+\.\d+.\d+)
 ARG BUILD_VERSION=18.4.0
 
-FROM golang:1.25-bookworm AS golang-builder
+FROM golang:1.27-bookworm AS golang-builder
 
 COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-bookworm-r4 /opt/bitnami/ /opt/bitnami/
 COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.16-bookworm-r1 /opt/bitnami/ /opt/bitnami/

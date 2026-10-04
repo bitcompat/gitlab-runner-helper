@@ -4,7 +4,7 @@ ARG BUILD_VERSION=18.11.4
 
 FROM golang:1.27-trixie AS golang-builder
 
-COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-trixie-r4 /opt/bitnami/ /opt/bitnami/
+COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-trixie /opt/bitnami/ /opt/bitnami/
 COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.16-trixie /opt/bitnami/ /opt/bitnami/
 
 ARG PACKAGE=gitlab-runner-helper

@@ -2,10 +2,10 @@
 # renovate: datasource=gitlab-releases depName=gitlab-org/gitlab-runner extractVersion=^v(?<version>\d+\.\d+.\d+)
 ARG BUILD_VERSION=18.11.4
 
-FROM golang:1.27-bookworm AS golang-builder
+FROM golang:1.27-trixie AS golang-builder
 
-COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-bookworm-r4 /opt/bitnami/ /opt/bitnami/
-COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.16-bookworm-r1 /opt/bitnami/ /opt/bitnami/
+COPY --link --from=ghcr.io/bitcompat/dumb-init:1.2.5-trixie-r4 /opt/bitnami/ /opt/bitnami/
+COPY --link --from=ghcr.io/bitcompat/nss-wrapper:1.1.16-trixie /opt/bitnami/ /opt/bitnami/
 
 ARG PACKAGE=gitlab-runner-helper
 ARG TARGET_DIR=gitlab-runner-helper
@@ -45,7 +45,7 @@ exec /bin/bash
     strip --strip-all /opt/bitnami/common/bin/* || true
 EOT
 
-FROM bitnami/minideb:bookworm as stage-0
+FROM bitnami/minideb:trixie as stage-0
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY --link --from=golang-builder /opt/bitnami /opt/bitnami
@@ -64,16 +64,17 @@ RUN <<EOT
 EOT
 
 ARG BUILD_VERSION
+ARG TARGETARCH
 ENV APP_VERSION=$BUILD_VERSION \
     BITNAMI_APP_NAME="gitlab-runner-helper" \
     PATH="/opt/bitnami/common/bin:/opt/bitnami/gitlab-runner-helper/bin:$PATH" \
     HOME="/home/gitlab-runner" \
-    OS_ARCH="${TARGETARCH:-amd64}" \
-    OS_FLAVOUR="debian-12" \
+    OS_ARCH="${TARGETARCH}" \
+    OS_FLAVOUR="debian-13" \
     OS_NAME="linux"
 
 LABEL org.opencontainers.image.licenses="Apache-2.0" \
-      org.opencontainers.image.ref.name="$BUILD_VERSION-debian-12" \
+      org.opencontainers.image.ref.name="$BUILD_VERSION-trixie" \
       org.opencontainers.image.source="https://github.com/bitcompat/gitlab-runner-helper" \
       org.opencontainers.image.title="gitlab-runner-helper" \
       org.opencontainers.image.version="$BUILD_VERSION"
